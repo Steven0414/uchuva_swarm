@@ -1,0 +1,46 @@
+#menu {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    background: #654;
+    z-index: 4;
+    position: fixed;
+}
+#handle {
+    position: absolute;
+    left: -4px;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background: #330C00;
+    cursor: w-resize;
+}
+#autohandle {
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: #765;
+    cursor: pointer;
+}
+.divscroll p, .divscroll h1, .divscroll h5, .divscroll li, .divscroll label{
+    color : #FFF;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+#plantillaPrograma {
+    background-color: white;
+}
+.divscroll input{
+    color : #000;
+}
+.nada {
+    color : #000;
+}
+div.divscroll {
+    overflow-y:auto;
+    height:100%;
+    column-gap: 2em;
+}

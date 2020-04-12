@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  .row
+    br
+    .col-sm-6.col-md-6.col-lg-6(style="padding-left: 1.5rem")
+      a.text-success(href='/user')= __('Inicio / ')        
+      a.text-success(href='/admin/index')= __('Administrar / ')
+      a.text-success(href='/admin/workloader')= __('WorkLoaders / ')
+      a.text-success(href='#')= __('Agregar WorkLoader ')
+  h1.page-header Agregar WorkLoader
+  .row.placeholders(style="padding-left: 1rem")
+    form(method="post", action="create")
+      .form-group
+        label(for='inputName') Nombre
+        input#inputName.form-control(type='Nombre', name="name" placeholder='Nombre')
+      .checkbox
+        label
+          input(type='checkbox', name="enable")
+          |  Habilitar
+      button.btn.btn-primary(type='submit') Agregar

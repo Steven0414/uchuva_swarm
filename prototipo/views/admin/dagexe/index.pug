@@ -1,0 +1,50 @@
+extends ../layout
+
+block content
+  .row
+    br
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 1.5rem")
+      a.text-success(href='/user')= __('Inicio / ')        
+      a.text-success(href='/admin/index')= __('Administrar / ')
+      a.text-success(href='#')= __('Ejecuciones')
+  h1.page-header Ejecuciones
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th #
+          th Proyecto
+          th Workloader
+          th Sended
+          th Nodos
+          th Aristas
+          th Fecha
+          th Usuario
+          th Acciones
+      tbody
+        each dagexe in dagexes.length ? dagexes : []
+          tr
+            td 1
+            td= dagexe.nombre
+            td= dagexe.workloader
+            td= dagexe.sended
+            td= dagexe.nodes.length
+            td= dagexe.edges.length
+            -function prettyDate(date){
+                //if it's already a date object and not a string you don't need this line:       
+                -var dayNames = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sáb"];             
+                -var t = dayNames[date.getDay()];
+                -var d = date.getDate();
+                -var monthNames = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+                -var m = monthNames[date.getMonth()];
+                -var y = date.getFullYear();
+                -var h = date.getHours();
+                -var mn = date.getMinutes();
+                -var s = date.getSeconds();
+                -return t+' '+d+'-'+m+'-'+y+' '+h+':'+mn+':'+s;
+            -}
+            td= prettyDate(dagexe.date)             
+            td= dagexe.user
+            td
+              a.btn.btn-default(href='/admin/dagexeexe/show/'+dagexe._id, style="margin-right: 2rem") Ver
+              a.btn.btn-danger(href='/admin/dagexeexe/destroy/'+dagexe._id) Eliminar

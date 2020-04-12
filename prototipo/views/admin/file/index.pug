@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+  .row
+    br
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 1.5rem")
+      a.text-success(href='/user')= __('Inicio / ')        
+      a.text-success(href='/admin/index')= __('Administrar / ')
+      a.text-success(href='#')= __('Archivos')
+  h1.page-header Archivos
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th #
+          th Nombre
+          th Formato
+          th Tamaño
+          th Ruta
+          th Nombre en Uchuva
+          th Parent
+          th Tipo
+          th Fecha
+          th Usuario
+          th Acciones
+      tbody
+        each file in files.length ? files : []
+          tr
+            td 1
+            td= file.originalname
+            td= file.mimetype
+            td= file.size
+            td= file.destination
+            td= file.filename
+            td= file.parent
+            td= file.type
+            -function prettyDate(date){
+                //if it's already a date object and not a string you don't need this line:       
+                -var dayNames = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sáb"];             
+                -var t = dayNames[date.getDay()];
+                -var d = date.getDate();
+                -var monthNames = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+                -var m = monthNames[date.getMonth()];
+                -var y = date.getFullYear();
+                -var h = date.getHours();
+                -var mn = date.getMinutes();
+                -var s = date.getSeconds();
+                -return t+' '+d+'-'+m+'-'+y+' '+h+':'+mn+':'+s;
+            -}
+            td= prettyDate(file.uploadDate)              
+            td= file.owner
+            td
+              a.btn.btn-default(href='/admin/file/show/'+file._id, style="margin-right: 2rem") Ver
+              a.btn.btn-danger(href='/admin/file/destroy/'+file._id) Eliminar

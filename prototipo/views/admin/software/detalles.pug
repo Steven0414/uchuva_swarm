@@ -1,0 +1,68 @@
+extends ../layout
+
+block scripts
+  link(rel='stylesheet', href='/admin/css/codemirror.css')
+  style.
+    section {
+      width: 100%;
+    }
+    div#one {
+      width: 50%;
+      height: 95%;
+      float:left;
+    }
+    div#two {
+      width: 50%;
+      height: 95%;
+      overflow:hidden;
+    }
+    iframe {
+      width:100%;
+      border:0;
+      height: 500px;
+    }
+    .CodeMirror {
+      height: 100%;
+      background: white;
+    }
+
+
+block content
+  h1.page-header Details
+  .row.placeholders
+    button(onclick='render()') Renderizar
+    br
+    section
+      #one
+        textarea#textarea
+      #two
+        iframe#iframe
+    script(src='/admin/js/codemirror.js')
+    script(src='/admin/js/javascript.js')
+    script.
+      var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("textarea"),{
+      extraKeys: {
+        "Ctrl-S": function(instance) { alert("Guardado"); },
+        "Ctrl-Enter": function(instance) {render()}
+      }
+      });
+      myCodeMirror.refresh()
+      myCodeMirror.setSize("100%", "100%");
+    script.
+      function render(){
+        var result = '<html><head></head><body><button onclick="display()">Generate command</button><br\/\><p id="command"></p>'+
+              '<div id="opciones"></div>'+
+              '<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"><\/script>'+
+              '<script type="text/javascript" src="/admin/js/render.js"><\/script>'+
+              '<script type="text/javascript">'+myCodeMirror.getValue()+'<\/script>'+
+              '<\/body><\/html>';
+        var iframe = document.getElementById('iframe');
+
+        if(iframe.contentDocument) doc = iframe.contentDocument;
+        else if(iframe.contentWindow) doc = iframe.contentWindow.document;
+        else doc = iframe.document;
+
+        doc.open();
+        doc.writeln(result);
+        doc.close();
+      }

@@ -1,0 +1,30 @@
+.col-lg-12.col-md-12.col-sm-12#glosario(style="display: none")              
+  .row(style="height: unset!important")
+    .col-lg-12-col-md-12.col-sm-12
+      h5
+        b=__('Grafo')
+      p.text-left=__('Un Grafo es una estructura de modelado, orientada a representar las relaciones de los elementos que componen un conjunto.')
+  .row(style="height: unset!important")
+    .col-lg-8-col-md-8.col-sm-8
+      p.text-left=__('Los Grafos habitualmente se componen de dos elementos, vértices o nodos, y aristas. Siendo las aristas las encargadas de representar las relaciones entre los nodos.')
+      p.text-left=('Los Grafos pueden clasificarse según su dirección en dirigidos y no dirigidos, y según su estructura en cíclicos y acíclicos. Sin embargo, ambas clasificaciones pueden usarse en conjunto para describir un Grafo.')
+      ul
+        li=__('Grafos dirigidos: Grafos cuyas aristas tienen una dirección definida.')
+        li=__('Grafos no dirigidos: Grafos cuyas aristas representan relaciones simétricas y no poseen dirección.')
+        li=__('Grafos cíclicos: Grafos que contienen al menos un ciclo.')
+        li=__('Grafos acíclicos: Grafos que no contienen ningún cíclo.')
+    .col-lg-4-col-md-4.col-sm-4.text-right
+      img.img-fluid(src="../../grafo.png", height="200rem", style="margin-top: 3rem")
+  .row(style="height: unset!important")
+    .col-lg-12-col-md-12.col-sm-12
+      h5
+        b=__('DAG')
+      p.text-left=__('La palabra DAG viene de las siglas en inglés de Directed Acyclic Graph, o en español, Grafo Dirigido Acíclico. Son Grafos que no contienen ciclos y cuyas aristas poseen dirección.')
+      p.text-left=__('Los DAG son ampliamente utilizados para modelar cadenas de trabajos, dadas sus relaciones directas. Para el caso de Uchuva, los DAG son el elemento clave para modelar la ejecución ordenada de tareas.')
+      p.text-left=__('De acuerdo con lo anterior, los nodos simbolizarán tareas que necesitan ser ejecutadas. Por otro lado, las aristas representarán las dependencias entre cada una de las tareas, así como el orden de su ejecución dada la dirección de la arista.')
+      p.text-left=__('Complementariamente a la definición anterior, al descomponer un DAG se dan las siguientes subestructuras:')
+      ul
+        li=__('Secuencia: Secciones donde la ejecución de tareas es lineal y jerárquica.')
+        li=__('Paralelismo: Secciones con tareas independientes que dadas sus precondiciones pueden ejecutarse simultáneamente.')
+        li=__('Join: Secciones con tareas cuya realización depende de más de una tarea anterior.')
+        li=__('Fork: Secciones con un conjunto de tareas cuya realización depende de una única tarea anterior.')

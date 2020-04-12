@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  .container-fluid
+  .row
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 4rem")
+      a.text-success(href='/user')= __('Inicio')      
+    .col-sm-8.col-md-8.col-lg-8.text-right(style="padding-right: 4rem")
+      a.btn.btn-sm.btn-primary(style="margin-right: 2rem; margin-bottom: 0px", href='/crearDag', id="createdag")= __('Nuevo Dag')
+      a.btn.btn-sm.btn-info(style="margin-bottom: 0px", href='/filemanager', id="filemanager")= __('Administrador de archivos')
+  hr
+  .row    
+    .main(class="col-sm-9 col-md-10")
+        .row
+        if dags.length
+            include _paginate
+            each val in dags
+              .col-sm-6.col-md-4
+                .thumbnail
+                  img(src=val.imagen, width=500, height=400)
+                  .caption
+                    h3
+                      a(href="/build?id="+val.nombre)= val.nombre
+                    -function prettyDate(date){
+                        //if it's already a date object and not a string you don't need this line:       
+                        -var dayNames = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sáb"];             
+                        -var t = dayNames[date.getDay()];
+                        -var d = date.getDate();
+                        -var monthNames = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+                        -var m = monthNames[date.getMonth()];
+                        -var y = date.getFullYear();
+                        -var h = date.getHours();
+                        -var mn = date.getMinutes();
+                        -var s = date.getSeconds();
+                        -return t+' '+d+'-'+m+'-'+y+' '+h+':'+mn+':'+s;
+                    -}
+                    p=prettyDate(val.date)
+                    p
+                      a.btn.btn-default(href="/build?id="+val.nombre, role='button') Ver
+                      a.btn.btn-danger(href="/eliminarDag?id="+val.proyecto, role='button') Eliminar
+        else
+            p(style="padding-left: 4rem")=__('Este Workflow no tiene ejecuciones pendientes.')
+            
+    .modal.fade#ayudaModal(tabindex="-1", role="dialog")
+      .modal-dialog.modal-lg(role="document")
+        .modal-content
+          .modal-header
+            button(type="button", class="close", data-dismiss="modal")=__('x')
+            h3.modal-title=__('Ayuda del Portal Científico')        
+          .modal-body
+            .row
+              .col-lg-8-col-md-8.col-sm-8
+                h4#headerAyuda              
+              .col-lg-4.col-md-4.col-sm-4.text-right
+                .btn.btn-warning.text-white#buttonAyuda(onclick="mostrarAyuda('ayuda')", style="margin-right: 2rem")=__('Ayuda')
+                .btn.btn-primary.text-white#buttonGlosario(onclick="mostrarAyuda('glosario')")=__('Glosario')
+            hr
+            .row
+              .col-lg-12.col-md-12.col-sm-12#ayuda(style="display: none")
+                p=__('Estás en la interfaz de ejecuciones. Aquí encontrarás las ejecuciones del Dag que seleccionaste.')
+              include ./glosario.pug

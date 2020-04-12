@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - 6.9
+sudo: false
+cache:
+  directories:
+    - prototipo/node_modules
+before_script: 
+  - cd prototipo
+  - "npm install"
+
+#  - "0.6"
+# services: mongodb
+# default script - npm test
+#env:
+#  - CXX=g++-4.8
+#before_install:
+#- sudo apt-get update -qq
+#- sudo apt-get install -qq [packages list]
+
+#deploy:
+#  provider: heroku
+#  api_key:
+#    secure: 
+#  app: uchuva
+#  on:
+#repo: carlochess/uchuva
+
+# Great travis.ci script
+# https://github.com/IMA-WorldHealth/bhima-2.X/blob/master/.travis.yml

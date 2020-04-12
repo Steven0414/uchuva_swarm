@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='vendor/bootstrap/bootstrap.min.css', rel='stylesheet', media='screen') 
+    link(rel='stylesheet', href='css/style.css')
+    script(src='vendor/jquery/jquery.js')
+    script(src='vendor/bootstrap/bootstrap.min.js')
+    script(src='js/ayuda.js')
+    block head
+  body
+    include ./navbar.pug
+    block content

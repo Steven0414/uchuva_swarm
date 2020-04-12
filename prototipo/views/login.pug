@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .container.text-center
+    br
+    br
+    .row
+      .col-lg-6.mb-4(style="background-image: url('/login_bg.jpg') ; background-size: cover ; height: 35rem; border-radius: 20px")
+
+      .col-lg-6
+        .row
+          h1.text-primary Entrar al portal
+          h4 Investiga a tu gusto
+          if mensajes
+            div
+              each item in mensajes
+                div.alert.alert-danger= item
+        hr
+        .row.text-center
+          .col-lg-12
+            form(role='form', action="/login",method="post")
+              .form-group.row
+                .col-lg-8.col-lg-offset-2
+                  input.form-control(type='text', name="username", placeholder='Ingrese su Usuario', id='username')
+              .form-group.row
+                .col-lg-8.col-lg-offset-2
+                  input.form-control(type='password', name="password", placeholder='Ingrese su Contraseña', id='password')
+              .row
+                a(href='/')
+                  button.btn.btn-secondary(type="button", style="margin-right: 5px")= __('Cancel')
+                button.btn.btn-primary(type='submit', id="btn-login")= __('Submit')
+        hr
+        .row
+          .col-lg-6.text-right
+            h6.small ¿Aún no tienes un Usuario?
+          .col-lg-6.text-left(style="margin-top: 0.6rem")
+            a.text-success.small(href='/register')= __('Registro')          

@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .row
+    br
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 1.5rem")
+      a.text-success(href='/user')= __('Inicio / ')        
+      a.text-success(href='/admin/index')= __('Administrar / ')
+      a.text-success(href='#')= __('WorkLoaders')
+  .row
+    .col-lg-8.col-md-8
+      h1.page-header WorkLoaders
+    .col-lg-4.col-md-4.text-right
+      a.btn.btn-primary(href='/admin/workloader/add', style="margin-top: 5.2rem") Agregar WorkLoader  
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th #
+          th Nombre
+          th Habilitado
+          th Acciones
+      tbody
+        each workloader in workloaders.length ? workloaders : []
+          tr
+            td 1
+            td= workloader.name
+            td= workloader.enable
+            td
+              a.btn.btn-default(href='/admin/workloader/show/'+workloader._id, style="margin-righ: 2rem") Ver
+              a.btn.btn-primary(href='/admin/workloader/edit/'+workloader._id, style="margin-righ: 2rem") Editar
+              a.btn.btn-danger(href='/admin/workloader/destroy/'+workloader._id, style="margin-righ: 2rem") Eliminar

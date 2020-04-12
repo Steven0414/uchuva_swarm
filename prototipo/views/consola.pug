@@ -1,0 +1,39 @@
+doctype html
+html
+  body
+    title tty.js
+    link(rel='stylesheet', href='style.css')
+    link(rel='stylesheet', href='user.css')
+    script(src='js/ayuda.js')
+    h1 tty.js
+    #help
+      p Click the titlebar to drag.
+      p Double-click titlebar to maximize.
+      p Click the lower-right corner to resize.
+      p Click the tilde to open a new tab.
+      p Click the tilde with a modifier to close the window.
+    button#open Open Terminal
+    button#lights Light Switch
+  .modal.fade#ayudaModal(tabindex="-1", role="dialog")
+    .modal-dialog.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          button(type="button", class="close", data-dismiss="modal")=__('x')
+          h3.modal-title=__('Ayuda del Portal Científico')        
+        .modal-body
+          .row
+            .col-lg-8-col-md-8.col-sm-8
+              h4#headerAyuda              
+            .col-lg-4.col-md-4.col-sm-4.text-right
+              .btn.btn-warning.text-white#buttonAyuda(onclick="mostrarAyuda('ayuda')", style="margin-right: 2rem")=__('Ayuda')
+              .btn.btn-primary.text-white#buttonGlosario(onclick="mostrarAyuda('glosario')")=__('Glosario')
+          hr
+          .row
+            .col-lg-12.col-md-12.col-sm-12#ayuda(style="display: none")
+            include ./glosario.pug
+    script(src='socket.io/socket.io.js')
+    script(src='term.js')
+    script(src='options.js')
+    script(src='tty.js')
+    script(src='user.js')
+

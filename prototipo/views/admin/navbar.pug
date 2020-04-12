@@ -1,0 +1,78 @@
+nav.navbar(style="border-radius: 0px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);")
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+        span.sr-only Toggle
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      if (!user)
+        a.navbar-brand(href='/')
+          img#img-fluid(src='/logo.png', style="width: 10rem")
+      else
+        a.navbar-brand(href='/user')
+          img#img-fluid(src='/logo.png', style="width: 10rem")
+    #navbar.navbar-collapse.collapse
+      .navbar-form.navbar-right
+        if (user)            
+            button.btn.btn-sm.btn-warning(style="margin-right: 2rem; margin-left: 2rem", href="#", data-toggle="modal", data-target="#ayudaModal")=__('Ayuda')
+            button#dropDownMenuLang.btn.btn-default.btn-sm.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true') #{__('Usuario')} #{user.username}            
+            ul.dropdown-menu(role='menu', aria-labelledby='dropDownMenuLang')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='/user')= __('Inicio')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='/developers', target="_blank")= __('API Desarrolladores')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='/admin/index')= __('Administrar')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='/logout')= __('Salir')  
+.container-fluid
+  .row    
+    .col-sm-3.col-md-2.sidebar(style = "margin-top: 2rem")
+      //-
+        ul.nav.nav-sidebar
+          li.active
+            a(href='#')
+              | Overview
+              span.sr-only (current)
+          li
+            a(href='#') Reports
+          li
+            a(href='#') Analytics
+          li
+            a(href='#') Export
+      ul.nav.nav-sidebar
+        li
+          a(href='/admin/dag') Dags
+        li
+          a(href='/admin/dagexe') Ejecuciones
+        li
+          a(href='/admin/file') Archivos
+        li
+          a(href='/admin/software') Programas
+        li
+          a(href='/admin/workloader') WorkLoaders
+
+.modal.fade#ayudaModal(tabindex="-1", role="dialog")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .modal-header
+        button(type="button", class="close", data-dismiss="modal")=__('x')
+        h3.modal-title=__('Ayuda del Portal Científico')        
+      .modal-body
+        .row
+          .col-lg-8-col-md-8.col-sm-8
+            h4#headerAyuda              
+          .col-lg-4.col-md-4.col-sm-4.text-right
+            .btn.btn-warning.text-white#buttonAyuda(onclick="mostrarAyuda('ayuda')", style="margin-right: 2rem")=__('Ayuda')
+            .btn.btn-primary.text-white#buttonGlosario(onclick="mostrarAyuda('glosario')")=__('Glosario')
+        hr
+        .row
+          .col-lg-12.col-md-12.col-sm-12#ayuda(style="display: none")
+            .row
+              .col-lg-12.col-md-12.col-sm-12.text-left
+                p.text-left=__('Te encuentras en la interfaz de administración. Podrás encontrar definiciones clave en la pestaña "Glosario".')                    
+                p.text-left=__('La barra vertical del lado izquierdo te ofrece los listados de los elementos creados en el sistema, así como sus opciones para ver y eliminar.')  
+                hr              
+                p.text-left=__('Al interior de cada listado encontrarás información detallada de los elementos que hayas listado.')
+          include ./glosario.pug

@@ -1,0 +1,105 @@
+extends layout
+
+block content
+
+  .container-fluid
+  .row
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 4rem")
+      a.text-success(href='/user')= __('Inicio')
+    .col-sm-8.col-md-8.col-lg-8.text-right(style="padding-right: 4rem")
+      a.btn.btn-sm.btn-primary(style="margin-right: 2rem; margin-bottom: 0px", href='/crearDag', id="createdag")= __('Nuevo Dag')
+      a.btn.btn-sm.btn-info(style="margin-bottom: 0px", href='/filemanager', id="filemanager")= __('Administrador de archivos')
+  hr
+  .row  
+    .main(class="col-sm-12 col-md-12")
+      if mensajes.length
+        div
+          each item in mensajes.length ? mensajes : []
+            div.alert.alert-danger= mensajes
+        br      
+      if dags.length
+        include _paginate
+        .row
+        each val in dags.length ? dags : []
+
+          .col-sm-6.col-md-4.col-lg-3
+            .thumbnail
+              if val.imagen
+                img(src=val.imagen, width=500, height=400)
+              else
+                img.img-fluid(src='images/noimage.png', style="height: 15rem")
+              .caption
+                h3
+                  a(href="/editar?id="+val._id)= val.nombre
+                -function prettyDate(date){
+                    //if it's already a date object and not a string you don't need this line:       
+                    -var dayNames = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sáb"];             
+                    -var t = dayNames[date.getDay()];
+                    -var d = date.getDate();
+                    -var monthNames = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+                    -var m = monthNames[date.getMonth()];
+                    -var y = date.getFullYear();
+                    -var h = date.getHours();
+                    -var mn = date.getMinutes();
+                    -var s = date.getSeconds();
+                    -return t+' '+d+'-'+m+'-'+y+' '+h+':'+mn+':'+s;
+                -}
+                p=prettyDate(val.date)
+                p
+                  a.btn.btn-primary(href="/editar?id="+val._id, role='button', style="margin-right: 1rem")= __('Editar')
+                  a.btn.btn-success(href="/builds?id="+val._id, role='button', style="margin-right: 1rem")= __('Ejecuciones')
+                  a.btn.btn-danger(href="/eliminarDag?id="+val._id, role='button')= __('Eliminar')
+      else
+        p#welcome= __('No tienes proyectos aún')
+
+  .modal.fade#ayudaModal(tabindex="-1", role="dialog")
+    .modal-dialog.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          button(type="button", class="close", data-dismiss="modal")=__('x')
+          h3.modal-title=__('Ayuda del Portal Científico')        
+        .modal-body
+          .row
+            .col-lg-8-col-md-8.col-sm-8
+              h4#headerAyuda              
+            .col-lg-4.col-md-4.col-sm-4.text-right
+              .btn.btn-warning.text-white#buttonAyuda(onclick="mostrarAyuda('ayuda')", style="margin-right: 2rem")=__('Ayuda')
+              .btn.btn-primary.text-white#buttonGlosario(onclick="mostrarAyuda('glosario')")=__('Glosario')
+          hr
+          .row
+            .col-lg-12.col-md-12.col-sm-12#ayuda(style="display: none")
+              .row
+                .col-lg-12.col-md-12.col-sm-12
+                  p=__('Estás en el inicio de Uchuva, aquí tendrás un resumen de tus Dag, y los accesos directos a las funciones del Portal Científico.')
+              .row
+                .col-lg-4.col-md-4.col-sm-4
+                  button.btn.btn-sm.btn-info=__('Administrador de archivos')
+                .col-lg-8.col-md-8.col-sm-8
+                  p=__('Conduce al Administrador de archivos, donde podrás cargar y eliminar directorios y archivos.')
+              .row
+                .col-lg-4.col-md-4.col-sm-4
+                  button.btn.btn-sm.btn-primary=__('Nuevo Dag')
+                .col-lg-8.col-md-8.col-sm-8
+                  p=__('Crea un nuevo Dag y te conduce al editor de Dags, donde podrás modelar el nuevo Dag que has creado.')
+              hr
+              .row
+                .col-lg-12.col-md-12.col-sm-12
+                  p=__('Cada Dag tendrá una miniatura, acompañada de sus opciones básicas:.')
+              .row
+                .col-lg-4.col-md-4.col-sm-4
+                  button.btn.btn-sm.btn-primary=__('Editar')
+                .col-lg-8.col-md-8.col-sm-8
+                  p=__('Te conduce al editor de Dags, para modificar el Dag seleccionado.')
+              br
+              .row
+                .col-lg-4.col-md-4.col-sm-4
+                  button.btn.btn-sm.btn-success=__('Ejecuciones')
+                .col-lg-8.col-md-8.col-sm-8
+                  p=__('Te conduce al listado de ejecuciones del Dag seleccionado.')
+              br
+              .row
+                .col-lg-4.col-md-4.col-sm-4
+                  button.btn.btn-sm.btn-danger=__('Eliminar')
+                .col-lg-8.col-md-8.col-sm-8
+                  p=__('Elimina el Dag seleccionado.')
+            include ./glosario.pug

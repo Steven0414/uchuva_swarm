@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  .row
+    br
+    .col-sm-4.col-md-4.col-lg-4(style="padding-left: 1.5rem")
+      a.text-success(href='/user')= __('Inicio / ')        
+      a.text-success(href='/admin/index')= __('Administrar / ')
+      a.text-success(href='#')= __('Programas')
+  .row
+    .col-lg-8.col-md-8
+      h1.page-header Programas
+    .col-lg-4.col-md-4.text-right
+      a.btn.btn-primary(href='/admin/software/add', style="margin-top: 5.2rem") Agregar Programa
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th #
+          th Nombre
+          th Habilitado
+          th Acciones
+      tbody
+        each software in softwares.length ? softwares : []
+          tr
+            td 1
+            td= software.name
+            td= software.enable
+            td
+              if software.enable
+                a.btn.btn-warning(href='/admin/software/toggle/'+software._id, style="margin-right: 2rem") Deshabilitar
+              else
+                a.btn.btn-success(href='/admin/software/toggle/'+software._id, style="margin-right: 2rem") Habilitar
+              a.btn.btn-primary(href='/admin/software/edit/'+software._id, style="margin-right: 2rem") Editar
+              a.btn.btn-danger(href='/admin/software/destroy/'+software._id) Eliminar

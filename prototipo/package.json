@@ -1,0 +1,80 @@
+{
+  "name": "uchuva",
+  "version": "0.0.1",
+  "description": "Un modulo para el envio de workflows a diferentes load managers",
+  "main": "main.js",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "async": "^2.0.0-rc.2",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.0",
+    "compression": "^1.6.2",
+    "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^1.1.0",
+    "cookie-parser": "^1.4.1",
+    "dot": "^1.0.3",
+    "express": "^4.13.4",
+    "express-paginate": "^0.2.2",
+    "express-session": "^1.13.0",
+    "express-validator": "^2.21.0",
+    "fs-extra": "^0.30.0",
+    "i18n": "^0.8.3",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.4.12",
+    "mongoose-paginate": "^5.0.3",
+    "morgan": "^1.7.0",
+    "multer": "^1.1.0",
+    "multer-gridfs-storage": "^1.0.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0",
+    "passport.socketio": "^3.7.0",
+    "pkginfo": "^0.4.0",
+    "pug": "^2.0.0-alpha3",
+    "rimraf": "^2.5.2",
+    "serve-favicon": "^2.3.0",
+    "simple-ssh": "^0.9.0",
+    "soap": "^0.13.0",
+    "soap-htcondor": "^1.0.1",
+    "socket.io": "^1.5.1",
+    "superheroes": "^1.0.0",
+    "tar-fs": "^1.12.0",
+    "throng": "^4.0.0",
+    "validator": "^6.1.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jslint": "^0.10.3",
+    "mocha": "^3.0.2",
+    "nodemon": "^1.11.0",
+    "proxyquire": "^1.7.10",
+    "selenium-webdriver": "^3.0.1",
+    "sinon": "^1.17.6",
+    "supertest": "^2.0.1",
+    "z-schema": "^3.18.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/unit/",
+    "open": "bash debian/open.sh",
+    "test-selenium": "./node_modules/.bin/mocha -R xunit test/selenium/ > test-selenium-reports.xml",
+    "test-integration": "./node_modules/.bin/mocha -R xunit test/regression > test-integration-reports.xml",
+    "format": "./node_modules/.bin/esformatter --config utils/formatter.json -i 'routes/**/*.js' ",
+    "start": "NODE_ENV=production node main.js",
+    "devel": "./node_modules/.bin/nodemon --ignore 'data/*' main.js",
+    "build-rpm": "speculate",
+    "worker": "node ./worker/destinatario.js"
+  },
+  "keywords": [
+    "workflows",
+    "htcondor"
+  ],
+  "node_deb": {
+    "entrypoints": {
+      "daemon": "NODE_ENV=production node main.js"
+    }
+  },
+  "author": "Carlos Roman",
+  "license": "ISC"
+}
