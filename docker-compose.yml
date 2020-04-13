@@ -116,4 +116,8 @@ services:
     volumes:
       - uchuva:/app
     volumes:
+<<<<<<< HEAD
       - ./docker/filebeat/filebeat.yml:/filebeat.yml
+=======
+      - ./docker/filebeat/filebeat.yml:/filebeat.yml
+>>>>>>> e222077a18b1609b4e89fd976eee5a36547dc490
