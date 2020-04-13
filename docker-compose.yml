@@ -1,4 +1,7 @@
-version: '2'
+version: '3'
+
+volumes:
+  uchuva:
 
 services:
 
@@ -10,7 +13,7 @@ services:
     restart:
       always
     volumes:
-        - /app
+      - uchuva:/app
     ports:
       - "3000:3000"
     environment:
@@ -24,12 +27,10 @@ services:
     image: steven0414/uchuva
     command:
       npm run worker
-    volumes_from:
-      - uchuva
-    restart:
-      always
     volumes:
-        - /app
+      - uchuva:/app
+    restart:
+      always    
     environment:
       SHARE: /app
       CONDOR_URL: http://htcondor:8080/
@@ -48,3 +49,71 @@ services:
     image: mongo
     expose:
       - "27017"
+
+  htcondor:
+    image:
+      steven0414/htcondor
+    build:
+      ./docker/htcondor
+    volumes:
+      - uchuva:/app
+
+### docker run -d -h docker -p 10022:22 --name openlava carlochess/openlava
+  openlava:
+    build:
+      ./docker/openlava
+    hostname: docker
+    volumes:
+      - uchuva:/app
+    expose:
+      - "22"
+
+### docker run -d -h docker -p 10022:22 --privileged --name torque agaveapi/torque
+  torque:
+    image:
+      agaveapi/torque
+    volumes:
+      - uchuva:/app
+    hostname: docker
+    expose:
+      - "22"
+    privileged: true
+
+#### Recordar el sed del /etc/hosts
+#### docker run -h docker.example.com -p 10022:22 --rm --name slurm agaveapi/slurm
+  slurm:
+    image:
+      agaveapi/slurm
+    volumes:
+      - uchuva:/app
+    hostname: docker.example.com
+    expose:
+      - "22"
+
+#docker run -p 4569:4569 --name my_s3 -d lphoward/fake-s3
+#  fake-s3:
+#    image:
+#      lphoward/fake-s3
+
+# docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it -v $(pwd)/docker/filebeat/uchuva.conf:/etc/logstash/conf.d/uchuva.conf --name elk sebp/elk
+# 5601 (Kibana web interface).
+# 9200 (Elasticsearch JSON interface).
+# 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section).
+#  elk:
+#    image:
+#      sebp/elk
+#    volumes_from:
+#      - uchuva
+#    volumes:
+#      - ./docker/filebeat/02-beats-input.conf:/etc/logstash/conf.d/02-beats-input.conf
+#    ports:
+#      - "5601:5601"
+
+# docker run -d --volumes-from uchuva -v "./docker/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml" olinicola/filebeat
+  filebeat:
+    image:
+      prima/filebeat
+    volumes:
+      - uchuva:/app
+    volumes:
+      - ./docker/filebeat/filebeat.yml:/filebeat.yml
