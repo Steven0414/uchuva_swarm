@@ -60,6 +60,8 @@ services:
 
 ### docker run -d -h docker -p 10022:22 --name openlava carlochess/openlava
   openlava:
+    image:
+      steven0414/openlava
     build:
       ./docker/openlava
     hostname: docker
