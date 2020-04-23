@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   uchuva:
+    driver: nfs    
 
 services:
 
@@ -117,5 +118,4 @@ services:
       prima/filebeat
     volumes:
       - uchuva:/app
-    volumes:
-      - ./docker/filebeat/filebeat.yml:/filebeat.yml      
+      - ./docker/filebeat/filebeat.yml:/filebeat.yml        
