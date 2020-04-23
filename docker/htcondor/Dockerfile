@@ -29,6 +29,12 @@ FROM centos
 
 MAINTAINER Rion Dooley <dooley@tacc.utexas.edu>
 
+# Install SSHD (Open SSH)
+RUN yum -y install openssh-server
+RUN ssh-keygen -A
+# RUN /usr/sbin/sshd -D
+# RUN systemctl sshd status
+
 # Add condor user
 RUN adduser condor && \
     echo "condor:condor" | chpasswd
@@ -53,12 +59,6 @@ RUN yum -y --enablerepo=centosplus install condor --skip-broken
 ADD htcondor/condor_config.local /etc/condor/condor_config.local
 ADD htcondor/condor.submit /etc/condor/test.submit
 WORKDIR /etc/condor
-
-# Install SSHD (Open SSH)
-RUN yum -y install openssh-server
-RUN ssh-keygen -A
-# RUN /usr/sbin/sshd -D
-# RUN systemctl sshd status
 
 # Install supervisor
 # RUN yum update -y
