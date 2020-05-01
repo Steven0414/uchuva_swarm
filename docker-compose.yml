@@ -119,8 +119,8 @@ services:
 volumes:
   uchuva:
     #external: true
-    driver: "local"
+    driver: local
       driver_opts:
-        type: "nfs"
-        o: "nfsvers=4,addr=192.168.99.104,nolock,soft,rw,port=2049"
+        type: nfs
+        o: nfsvers=4,addr=192.168.99.104,nolock,soft,rw
         device: ":/nfs-share"
