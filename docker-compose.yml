@@ -1,12 +1,5 @@
 version: '3'
 
-volumes:
-  uchuva:
-    driver_opts:
-      type: "nfs"
-      o: "addr=10.40.0.199,nolock,soft,rw"
-      device: ":/app"    
-
 services:
 
   uchuva:
@@ -121,4 +114,13 @@ services:
       prima/filebeat
     volumes:
       - uchuva:/app
-      - ./docker/filebeat/filebeat.yml:/filebeat.yml        
+      - ./docker/filebeat/filebeat.yml:/filebeat.yml
+
+volumes:
+  uchuva:
+    #external: true
+    driver: local
+      driver_opts:
+        type: nfs
+        o: nfsvers=4,addr=192.168.99.104,rw,port=2049
+        device: ":/nfs-share"
