@@ -24,7 +24,6 @@
 #
 ######################################################
 
-# FROM agave-api/centos-base
 FROM centos
 
 MAINTAINER Rion Dooley <dooley@tacc.utexas.edu>
@@ -32,8 +31,6 @@ MAINTAINER Rion Dooley <dooley@tacc.utexas.edu>
 # Install SSHD (Open SSH)
 RUN yum -y install openssh-server
 RUN ssh-keygen -A
-# RUN /usr/sbin/sshd -D
-# RUN systemctl sshd status
 
 # Add condor user
 RUN adduser condor && \
@@ -44,31 +41,25 @@ ADD ssh/id_rsa.pub /home/condor/.ssh/authorized_keys
 USER root
 
 # Install python
-
 RUN dnf -y install python3
 RUN python3 --version
 
 # Install ht condor
-# RUN curl -o /etc/yum.repos.d/htcondor-stable-rhel6.repo http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel6.repo
 RUN curl -o /etc/yum.repos.d/htcondor-stable-rhel8.repo https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel8.repo
 RUN curl -o RPM-GPG-KEY-HTCondor https://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
 RUN rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
-# RUN yum -y --enablerepo=centosplus install condor-8.4.11
-RUN yum -y --enablerepo=centosplus install condor --skip-broken
+RUN yum -y --enablerepo=centosplus install condor
 
 ADD htcondor/condor_config.local /etc/condor/condor_config.local
 ADD htcondor/condor.submit /etc/condor/test.submit
 WORKDIR /etc/condor
 
 # Install supervisor
-# RUN yum update -y
 RUN yum -y install epel-release
-# RUN yum update -y
 RUN yum -y install supervisor
 
 # Conf supervisor
 ADD supervisord.conf /etc/supervisord.conf
-# RUN mkdir /var/log/supervisor
 RUN chmod -R 777 /var/log/supervisor
 
 VOLUME /var/lib/condor
@@ -79,4 +70,3 @@ RUN newgrp condor
 
 EXPOSE 10389 22 9618
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
-# CMD /usr/bin/supervisord
