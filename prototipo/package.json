@@ -31,7 +31,7 @@
     "passport-local-mongoose": "^4.0.0",
     "passport.socketio": "^3.7.0",
     "pkginfo": "^0.4.0",
-    "pug": "^2.0.0-alpha3",
+    "pug": "^3.0.1",
     "rimraf": "^2.5.2",
     "serve-favicon": "^2.3.0",
     "simple-ssh": "^0.9.0",
