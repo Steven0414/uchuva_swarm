@@ -1,4 +1,17 @@
-FROM node:6-onbuild
+FROM node:6-alpine
+
+CMD ["/bin/sh"]
+ENV NODE_VERSION=6.17.1
+ENV YARN_VERSION=1.15.2
+RUN apk add --no-cache
+
+CMD ["node"]
+
+RUN mkdir -p /usr/src/app
+ADD ./ /usr/src/app
+WORKDIR /usr/src/app
+
+RUN npm install
 
 ENV SHARE=/app
 ENV NODE_ENV=production
@@ -16,4 +29,5 @@ ENV USESOAP=true
 
 RUN mkdir -p /app/logs
 
+CMD ["npm", "start"]
 EXPOSE 3000
