@@ -1,7 +1,7 @@
-version: '3.2'
+version: '3'
 
 services:
-
+  
   uchuva:
     build:
       ./prototipo
@@ -13,21 +13,31 @@ services:
       - uchuva:/app
     ports:
       - "3000:3000"
+    links:
+      - rabbit
     environment:
       SHARE: /app
       CONDOR_URL: http://htcondor:8080/
       CONDOR_JOB_OWNER: uchuva
       BMANAGER: 3
       QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: loadbalancer
 
   uchuvaworker:
+    build:
+      ./prototipo
     image: steven0414/uchuva
     command:
       npm run worker
     volumes:
       - uchuva:/app
+    expose:
+      - "3000"
+    links:
+      - rabbit
     restart:
-      always    
+      always
     environment:
       SHARE: /app
       CONDOR_URL: http://htcondor:8080/
@@ -38,6 +48,15 @@ services:
   rabbit:
     image: rabbitmq:3-management-alpine
     hostname: my-rabbit
+    expose:
+      - "5672"
+      - "15671"
+      - "15672"
+      - "15691"
+      - "15692"
+      - "25672"
+      - "4369"
+      - "5671"
     environment:
       RABBITMQ_DEFAULT_USER : user
       RABBITMQ_DEFAULT_PASS : password
@@ -49,18 +68,18 @@ services:
 
   htcondor:
     image:
-      steven0414/htcondor_8.4.9
-    build:
-      ./docker/htcondor
+      steven0414/htcondor
     volumes:
       - uchuva:/app
+    expose:
+      - "10389"
+      - "22"
+      - "9618"
 
 ### docker run -d -h docker -p 10022:22 --name openlava carlochess/openlava
   openlava:
     image:
       steven0414/openlava
-    build:
-      ./docker/openlava
     hostname: docker
     volumes:
       - uchuva:/app
@@ -76,6 +95,8 @@ services:
     hostname: docker
     expose:
       - "22"
+      - "10389"
+      - "9618"
     privileged: true
 
 #### Recordar el sed del /etc/hosts
@@ -88,6 +109,9 @@ services:
     hostname: docker.example.com
     expose:
       - "22"
+      - "10389"
+      - "6817"
+      - "6818"
 
 #docker run -p 4569:4569 --name my_s3 -d lphoward/fake-s3
 #  fake-s3:
@@ -117,4 +141,4 @@ services:
       - ./docker/filebeat/filebeat.yml:/filebeat.yml
 
 volumes:
-  uchuva:    
+  uchuva:
