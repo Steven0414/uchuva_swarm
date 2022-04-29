@@ -5,7 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "amqplib": "^0.5.1",
-    "async": "^2.0.0-rc.2",
+    "async": "^2.6.4",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.0",
     "compression": "^1.6.2",
