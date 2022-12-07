@@ -14,7 +14,7 @@
     "connect-mongo": "^1.1.0",
     "cookie-parser": "^1.4.1",
     "dot": "^1.0.3",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "express-paginate": "^0.2.2",
     "express-session": "^1.13.0",
     "express-validator": "^2.21.0",
